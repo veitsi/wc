@@ -9,13 +9,11 @@
 </head>
 <body>
 <?php
-echo $_POST['imgname'];
-print_r($_POST['cur']);
+//echo $_POST['imgname'];
 $s = file_get_contents('db.json');
 echo strlen($s);
 if (strlen($s)>0)
 {
-    print_r(json_decode($s, true));
     $db = json_decode($s, true);
 }
 else
@@ -23,9 +21,9 @@ else
     $db=[];
 }
 $db[$_POST['imgname']]=json_decode($_POST['cur'],true);
-print_r($db);
-//unlink('db.json');
 file_put_contents('db.json',json_encode($db));
+echo 'thank you. page was added to db. you can see results by ';
+echo '<a href="index.php?item='.$_POST['imgname'].'">link</a>';
 ?>
 </body>
 </html>

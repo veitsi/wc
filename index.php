@@ -9,12 +9,25 @@
 </head>
 <body>
 <?php
-$db = json_decode(file_get_contents('db.json'),true);
-foreach ($db as $img=>$objs)
-{
-    echo $img;
+$db = json_decode(file_get_contents('db.json'), true);
+if (!isset($_GET['item'])) {
+    foreach ($db as $img => $objs) {
+        echo $img . ',';
+    }
 }
-?>
 
+?>
+<?php if (isset($_GET['item'])):
+    $cur = $db[$_GET['item']];
+    ?>
+
+    <map name="mainmap">
+        <?php foreach ($cur as $index => $value): ?>
+            <area shape="rect" coords="<?= $value[1] ?>" title="<?= $value[0] ?>" alt="" href="#">
+        <?php endforeach; ?>
+    </map>
+    <img src="img/<?= $_GET['item'] ?>" alt="pic" usemap="#mainmap">
+
+<?php endif; ?>
 </body>
 </html>

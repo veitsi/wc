@@ -26,7 +26,7 @@
 ?>
 <img id="photo" src='<?=$target_file?>'>
     <form name="frm" action="db.php" method="post">
-        <input name="imgname" type="hidden" value="<?=$target_file?>">
+        <input name="imgname" type="hidden" value="<?=basename($_FILES["fileToUpload"]["name"])?>">
         <input name="cur" type="hidden" value="www">
         <input type="submit">
     </form>
@@ -46,7 +46,8 @@
     function faa(img, selection) {
         console.log('selected '+selection.x1+','+selection.x2);
         var descr = prompt("Please enter description", "cool place");
-        cur.push([descr, selection.x1, selection.y1, selection.x2, selection.y2]);
+        cur.push([descr, ''+selection.x1+','+ selection.y1 +','+
+        selection.x2+','+ selection.y2]);
         console.log(cur);
         $("input[name=cur]").val(JSON.stringify(cur));
         console.log($("input[name=cur]").val());
