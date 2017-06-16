@@ -11,9 +11,11 @@
 <?php
 $db = json_decode(file_get_contents('db.json'), true);
 if (!isset($_GET['item'])) {
+    echo '<h2>here are such places</h2><ul>';
     foreach ($db as $img => $objs) {
-        echo $img . ',';
+        echo '<li>'. '<a href="index.php?item='.$img.'">'.$objs[0][0].'</a>'. '</li>';
     }
+    echo '</ul>';
 }
 
 ?>
@@ -29,5 +31,6 @@ if (!isset($_GET['item'])) {
     <img src="img/<?= $_GET['item'] ?>" alt="pic" usemap="#mainmap">
 
 <?php endif; ?>
+<h2>do you want to add something?  <a href="gen.php">click</a> </h2>
 </body>
 </html>
