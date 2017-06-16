@@ -25,14 +25,37 @@
     move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
 ?>
 <img id="photo" src='<?=$target_file?>'>
+    <form name="frm" action="db.php" method="post">
+        <input name="imgname" type="hidden" value="<?=$target_file?>">
+        <input name="cur" type="hidden" value="www">
+        <input type="submit">
+    </form>
+
 <?php endif; ?>
 
 
 <script src="jquery.min.js"></script>
 <script src="jquery.imgareaselect/scripts/jquery.imgareaselect.js"></script>
 <script>
-    function faa() {
+    var db = [];
+    var key = '<?=basename($_FILES["fileToUpload"]["name"])?>';
+    console.log('key -'+key);
+    cur=[];
+    console.log(cur);
 
+    function faa(img, selection) {
+        console.log('selected '+selection.x1+','+selection.x2);
+        var descr = prompt("Please enter description", "cool place");
+        cur.push([descr, selection.x1, selection.y1, selection.x2, selection.y2]);
+        console.log(cur);
+        $("input[name=cur]").val(JSON.stringify(cur));
+        console.log($("input[name=cur]").val());
+    }
+    function finished() {
+//        alert('start');
+        $.post('db.php',{'db':db}, function sended() {
+            console.log($("input[name=db]").val());
+        })
     }
     $(document).ready(function () {
         $('img#photo').imgAreaSelect({
